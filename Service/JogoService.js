@@ -19,7 +19,7 @@ function BuscarPorId(id) {
         return jogo;
     }
     else {
-        throw { id: 404, msg: "Produto não encontrado!" }
+        throw { id: 404, msg: "Jogo não encontrado!" }
     }
 }
 
@@ -49,11 +49,23 @@ function Deletar(id) {
     }
 }
 
+function BuscarPorCategoria(categoria) {
+    let jogo = JogoRepository.BuscarPorCategoria(categoria);
+    if(jogo) {
+        return jogo;
+    }
+    else {
+        throw { id: 404, msg: "Jogo não encontrado!" }
+    }
+}
+
+
 
 module.exports = {
     Listar,
     Inserir,
     BuscarPorId,
     Atualizar,
-    Deletar
+    Deletar,
+    BuscarPorCategoria
 }

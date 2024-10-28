@@ -3,6 +3,7 @@ const app = express();
 const PORT = 3000;
 
 const JogoService = require('./Service/JogoService')
+const UserService = require('./Service/UsuarioService')
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -10,6 +11,8 @@ app.use(express.urlencoded({extended: true}));
 app.get('/', (req, res) =>{
     res.send("Página Inicial");
 })
+
+//  ------------------ ROTAS DOS JOGOS ------------------------
 
 //  LISTAR
 app.get('/jogos', (req, res) =>{
@@ -60,6 +63,83 @@ app.delete('/jogos/:id', (req, res) => {
       res.status(err).json(err)
     }
 })
+
+// BUSCAR POR CATEGORIA
+app.get('/jogos/:categoria', (req, res) =>{
+    const categoria = req.params.categoria;
+    try{
+        res.json(JogoService.BuscarPorCategoria(categoria));
+    }catch(err){
+        res.status(err.id).json(err);
+    }
+})
+
+//  ------------------ ROTAS DOS USUARIOS ------------------------
+
+//  LISTAR
+app.get('/usuarios', (req, res) =>{
+    res.json(UserService.Listar());
+})
+
+//  BUSCAR POR Id
+app.get('/usuarios/:id', (req, res) =>{
+    const id = req.params.id;
+    try{
+        res.json(UserService.BuscarPorId(id));
+    }catch(err){
+        res.status(err.id).json(err);
+    }
+})
+
+//  INSERIR
+app.post('/usuarios', (req,res) => {
+    const user = req.body;
+    try{
+        const userInserido = UserService.Inserir(user);
+        res.status(201).json(userInserido)
+    }catch(err){
+      res.status(err.id).json(err)
+    }
+})
+
+
+//  ATUALIZAR
+app.put('/usuarios/:id', (req, res) => {
+    const id = req.params.id;
+    const user = req.body;
+    try{
+      const userAtualizado = UserService.Atualizar(id, user)
+      res.status(201).json(userAtualizado)
+    }catch(err){
+      res.status(err.id).json(err)
+    }
+})
+
+//  DELETAR
+app.delete('/usuarios/:id', (req, res) => {
+    const id = req.params.id;
+    try{
+      const userExcluido = UserService.Deletar(id)
+      res.status(200).json(userExcluido)
+    }catch(err){
+      res.status(err).json(err)
+    }
+})
+
+// BUSCAR POR CPF
+app.get('/usuarios/:cpf', (req, res) =>{
+    const cpf = req.params.cpf;
+    try{
+        res.json(UserService.BuscarPorCPF(cpf));
+    }catch(err){
+        res.status(err.id).json(err);
+    }
+})
+
+
+
+
+
 
 
 app.listen(PORT, () => {
