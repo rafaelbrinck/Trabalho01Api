@@ -65,7 +65,7 @@ app.delete('/jogos/:id', (req, res) => {
 })
 
 // BUSCAR POR CATEGORIA
-app.get('/jogos/:categoria', (req, res) =>{
+app.get('/jogos/categoria/:categoria', (req, res) =>{
     const categoria = req.params.categoria;
     try{
         res.json(JogoService.BuscarPorCategoria(categoria));
@@ -73,6 +73,8 @@ app.get('/jogos/:categoria', (req, res) =>{
         res.status(err.id).json(err);
     }
 })
+
+
 
 //  ------------------ ROTAS DOS USUARIOS ------------------------
 
@@ -136,6 +138,35 @@ app.get('/usuarios/:cpf', (req, res) =>{
     }
 })
 
+
+
+
+
+
+//  ------------------ ROTAS DOS FAVORITOS ------------------------
+
+
+app.get('/usuarios/favoritos', (req, res) =>{
+    res.json(UserService.ListarFavoritos());
+})
+
+app.post('/usuarios/favoritos', (req, res) =>{
+    const favorito = req.body;
+    try{
+        const favoritoInserido = UserService.InserirFavoritos(favorito);
+        res.status(201).json(favoritoInserido)
+    }catch(err){
+      res.status(err.id).json(err)
+    }
+})
+app.get('/usuarios/favoritos/:id', (req, res) =>{
+    const id = req.params.id;
+    try{
+        res.json(UserService.ListarFavoritosDeID(id));
+    }catch(err){
+        res.status(err.id).json(err);
+    }
+})
 
 
 

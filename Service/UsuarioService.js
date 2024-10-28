@@ -59,11 +59,38 @@ function BuscarPorCPF(cpf){
     }
 }
 
+
+function ListarFavoritos(){
+    return UserRepository.ListarFavoritos();
+}
+
+function InserirFavoritos(favorito){
+    if(favorito && favorito.userID && favorito.jogoID){
+        return UserRepository.InserirFavoritos(favorito);
+    }else{
+        throw { id: 400, msg: "Favoritos sem dados corretos"}
+    }
+}
+function ListarFavoritosDeID(id) {
+    let jogosFavoritos = UserRepository.ListarFavoritosDeID(id);
+    if(jogosFavoritos) {
+        return jogosFavoritos;
+    }
+    else {
+        throw { id: 404, msg: "Usuário não encontrado!" }
+    }
+}
+
+
+
 module.exports = {
     Listar,
     Inserir,
     BuscarPorId,
     Atualizar,
     Deletar,
-    BuscarPorCPF
+    BuscarPorCPF,
+    InserirFavoritos,
+    ListarFavoritos,
+    ListarFavoritosDeID
 }
