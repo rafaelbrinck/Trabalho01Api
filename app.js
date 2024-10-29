@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+const ServidorService = require("./Service/ServidorService")
 const JogoService = require('./Service/JogoService')
 const UserService = require('./Service/UsuarioService')
 
@@ -143,28 +144,39 @@ app.get('/usuarios/:cpf', (req, res) =>{
 
 
 
-//  ------------------ ROTAS DOS FAVORITOS ------------------------
+//  ------------------ ROTAS DO SERVIDOR ------------------------
 
 
-app.get('/usuarios/favoritos', (req, res) =>{
-    res.json(UserService.ListarFavoritos());
+app.get('/servidor', (req, res) =>{
+    res.json(ServidorService.listar());
 })
 
-app.post('/usuarios/favoritos', (req, res) =>{
-    const favorito = req.body;
+app.get('/servidor/:id', (req, res) =>{
+    const id = req.params.id;
     try{
-        const favoritoInserido = UserService.InserirFavoritos(favorito);
-        res.status(201).json(favoritoInserido)
+        res.json(ServidorService.listarDescricoes(id));
+    }catch(err){
+        res.status(err.id).json(err);
+    }
+})
+
+app.post('/servidor', (req, res) =>{
+    const locacao = req.body;
+    try{
+        const locacaoInserido = ServidorService.inserir(locacao);
+        res.status(201).json(locacaoInserido)
     }catch(err){
       res.status(err.id).json(err)
     }
 })
-app.get('/usuarios/favoritos/:id', (req, res) =>{
+
+app.delete('/servidor/:id', (req, res) => {
     const id = req.params.id;
     try{
-        res.json(UserService.ListarFavoritosDeID(id));
+      const Valor = ServidorService.deletar(id)
+      res.status(200).json(Valor)
     }catch(err){
-        res.status(err.id).json(err);
+      res.status(err).json(err)
     }
 })
 

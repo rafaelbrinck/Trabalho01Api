@@ -21,6 +21,7 @@ function Inserir(user){
         throw { id: 404, msg: "CPF já cadastrado!" };
     }
     user.id = idGerador++;
+    user.valor = 0;
     listaUsuarios.push(user);
     return user;
 }
@@ -57,7 +58,11 @@ function Deletar(id){
     return (listaUsuarios.splice(IndiceUser, 1))[0];
 }
 
+function PesquisarPorCpf(cpf) {
+    return listaUsuarios.filter( (user) => user.cpf == cpf )
+}
 
+//  VALIDAÇÕES
 function ValidaCPF(cpf){
     const resultado = listaUsuarios.find( (user) => user.cpf == cpf)
     if(resultado){return true}
@@ -67,9 +72,6 @@ function ValidaNome(nome){
     const resultado = listaUsuarios.find( (user) => user.nome == nome)
     if(resultado){return true}
     else{return false}
-}
-function PesquisarPorCpf(cpf) {
-    return listaUsuarios.filter( (user) => user.cpf == cpf )
 }
 
 
@@ -90,6 +92,7 @@ function InserirFavoritos(favorito){
     if(!BuscarPorId(favorito.userID)){
         throw { id: 404, msg: "Usuario não cadastrado" };
     }
+    favorito.id = idGerador++;
     listaFavoritos.push(favorito);
     return favorito;
 }
@@ -117,8 +120,5 @@ module.exports = {
     BuscarPorId, 
     Atualizar,
     Deletar,
-    PesquisarPorCpf,
-    InserirFavoritos,
-    ListarFavoritos,
-    ListarFavoritosDeID
+    PesquisarPorCpf
 }

@@ -6,8 +6,17 @@ function Listar(){
 }
 
 function Inserir(jogo){
-    if(!jogo || !jogo.nome || !jogo.categoria || !jogo.preco){
+    if(!jogo || !jogo.nome || !jogo.categoria || !jogo.preco || !jogo.quantidade){
         return;
+    }
+    if(jogo.quantidade < 0){
+        throw { id: 400, msg: "Quantidade menor que zero!" };
+    }
+    if(jogo.preco < 0){
+        throw { id: 400, msg: "Valor menor que zero!" };
+    }
+    if(ValidaNome(jogo.nome) == true){
+        throw { id: 404, msg: "Jogo já cadastrado!" };
     }
     jogo.id = idGerador++;
     listaJogos.push(jogo);
@@ -23,7 +32,7 @@ function BuscarPorId(id){
 }
 
 function Atualizar(id, jogo){
-    if(!jogo || !jogo.nome || !jogo.categoria || !jogo.preco){
+    if(!jogo || !jogo.nome || !jogo.categoria || !jogo.preco || !jogo.quantidade){
         return;
     }
     let IndiceJogo = listaJogos.findIndex(
@@ -48,6 +57,14 @@ function Deletar(id){
 
 function PesquisarPorCategoria(categoria) {
     return listaJogos.filter( (jogo) => jogo.categoria == categoria )
+}
+
+
+//  VALIDAÇÕES
+function ValidaNome(nome){
+    const resultado = listaJogos.find( (jogo) => jogo.nome == nome)
+    if(resultado){return true}
+    else{return false}
 }
 
 
