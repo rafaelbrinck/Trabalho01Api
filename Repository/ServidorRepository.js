@@ -35,6 +35,9 @@ function listarDescricoes(id){
     }
     let locacoes = []
     const user =  UsuarioRepository.BuscarPorId(id)
+    if(!user){
+        return
+    }
     listaServidor.forEach((servidor)=>{
         const jogo = JogoRepository.BuscarPorId(servidor.idJogo)
         user.valor += jogo.preco
@@ -43,6 +46,7 @@ function listarDescricoes(id){
     locacoes.push(user);
     listaServidor.forEach((locacao) =>{
         const jogo = JogoRepository.BuscarPorId(locacao.idJogo)
+        jogo.quantidade = 1
         locacoes.push(jogo)
     })
     return locacoes

@@ -51,33 +51,11 @@ function Deletar(id) {
 
 
 function BuscarPorCPF(cpf){
-    const usuario = UserRepository.BuscarPorCPF(cpf);
+    const usuario = UserRepository.PesquisarPorCpf(cpf);
     if(usuario){
         return usuario;
     }else {
         throw { id: 404, msg: "Usuario não encontrado!" }
-    }
-}
-
-
-function ListarFavoritos(){
-    return UserRepository.ListarFavoritos();
-}
-
-function InserirFavoritos(favorito){
-    if(favorito && favorito.userID && favorito.jogoID){
-        return UserRepository.InserirFavoritos(favorito);
-    }else{
-        throw { id: 400, msg: "Favoritos sem dados corretos"}
-    }
-}
-function ListarFavoritosDeID(id) {
-    let jogosFavoritos = UserRepository.ListarFavoritosDeID(id);
-    if(jogosFavoritos) {
-        return jogosFavoritos;
-    }
-    else {
-        throw { id: 404, msg: "Usuário não encontrado!" }
     }
 }
 
@@ -89,8 +67,5 @@ module.exports = {
     BuscarPorId,
     Atualizar,
     Deletar,
-    BuscarPorCPF,
-    InserirFavoritos,
-    ListarFavoritos,
-    ListarFavoritosDeID
+    BuscarPorCPF
 }

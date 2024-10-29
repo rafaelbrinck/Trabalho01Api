@@ -24,7 +24,7 @@ function BuscarPorId(id) {
 }
 
 function Atualizar(id, jogo) {
-    if(jogo && jogo.nome && jogo.categoria && jogo.preco) {
+    if(jogo && jogo.nome && jogo.categoria && jogo.preco && jogo.quantidade) {
         const JogoAtualizado = JogoRepository.Atualizar(id, jogo);
         if(JogoAtualizado) {
             return JogoAtualizado;
