@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test:usuario": "jest Repository/UsuarioRepository.test.js",
+    "test:jogos": "jest Repository/JogoRepository.test.js",
+    "test:servidor": "jest Repository/ServidorRepository.test.js",
     "start": "node --watch app.js"
   },
-  "author": "",
+  "author": "Rafael Brinck & Pedro Sbardelotto",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "^4.21.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

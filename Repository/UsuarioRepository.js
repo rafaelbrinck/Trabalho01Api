@@ -3,21 +3,27 @@ const JogoRepository = require('./JogoRepository')
 let listaUsuarios = [];
 let idGerador = 1;
 
+function resetState() {
+    listaUsuarios = 0;
+    idGerador = 1;
+};
 
-
-function Listar(){
+function Listar() {
     return listaUsuarios;
 }
 
-function Inserir(user){
-    if(!user || !user.nome || !user.cpf){
+function Inserir(user) {
+    if (!user || !user.nome || !user.cpf) {
         return;
     }
-    if(ValidaNome(user.nome) == true){
-        throw { id: 404, msg: "Nome já cadastrado!" };
-    }
-    if(ValidaCPF(user.cpf) == true){
-        throw { id: 404, msg: "CPF já cadastrado!" };
+    // verificando a duplicidade apenas se lista já tiver usuários
+    if (listaUsuarios.length > 0) {
+        if (ValidaNome(user.nome) == true) {
+            throw { id: 404, msg: "Nome já cadastrado!" };
+        }
+        if (ValidaCPF(user.cpf) == true) {
+            throw { id: 404, msg: "CPF já cadastrado!" };
+        }
     }
     user.id = idGerador++;
     user.valor = 0;
@@ -25,52 +31,52 @@ function Inserir(user){
     return user;
 }
 
-function BuscarPorId(id){
-    return (listaUsuarios.find( 
-        function(user){
+function BuscarPorId(id) {
+    return (listaUsuarios.find(
+        function (user) {
             return (user.id == id);
         }
     ));
 }
 
-function Atualizar(id, user){
-    if(!user || !user.nome || !user.cpf){
+function Atualizar(id, user) {
+    if (!user || !user.nome || !user.cpf) {
         return;
     }
     let IndiceUser = listaUsuarios.findIndex(
-        function(user){
+        function (user) {
             return (user.id == id);
         }
     )
 
-    if(IndiceUser == -1) return;
+    if (IndiceUser == -1) return;
     user.id = id;
     listaUsuarios[IndiceUser] = user;
     return user;
 }
 
-function Deletar(id){
-    let IndiceUser = listaUsuarios.findIndex(function(user) {
+function Deletar(id) {
+    let IndiceUser = listaUsuarios.findIndex(function (user) {
         return (user.id == id);
     })
-    if(IndiceUser == -1) return;
+    if (IndiceUser == -1) return;
     return (listaUsuarios.splice(IndiceUser, 1))[0];
 }
 
 function PesquisarPorCpf(cpf) {
-    return listaUsuarios.filter( (user) => user.cpf == cpf )
+    return listaUsuarios.filter((user) => user.cpf == cpf)
 }
 
 //  VALIDAÇÕES
-function ValidaCPF(cpf){
-    const resultado = listaUsuarios.find( (user) => user.cpf == cpf)
-    if(resultado){return true}
-    else{return false}
+function ValidaCPF(cpf) {
+    const resultado = listaUsuarios.find((user) => user.cpf == cpf)
+    if (resultado) { return true }
+    else { return false }
 }
-function ValidaNome(nome){
-    const resultado = listaUsuarios.find( (user) => user.nome == nome)
-    if(resultado){return true}
-    else{return false}
+function ValidaNome(nome) {
+    const resultado = listaUsuarios.find((user) => user.nome == nome)
+    if (resultado) { return true }
+    else { return false }
 }
 
 
@@ -78,8 +84,9 @@ module.exports = {
     Listar,
     Inserir,
     Atualizar,
-    BuscarPorId, 
+    BuscarPorId,
     Atualizar,
     Deletar,
-    PesquisarPorCpf
+    PesquisarPorCpf,
+    resetState
 }

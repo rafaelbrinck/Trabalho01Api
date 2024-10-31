@@ -103,3 +103,5 @@ describe("CRUD jogos", () => {
         expect(PesquisarPorCategoria("Inexistente")).toEqual([]);
     });
 });
+
+// npm run test:jogos
