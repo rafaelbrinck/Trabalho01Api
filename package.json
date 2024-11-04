@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "test:usuarioroutes": "jest test/UsuarioRoutes.test.js",
     "test:usuario": "jest Repository/UsuarioRepository.test.js",
     "test:jogos": "jest Repository/JogoRepository.test.js",
     "test:servidor": "jest Repository/ServidorRepository.test.js",
